@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis y Predicción de Ventas Retail - Iván Cortés V.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; }
+        body { background-color: #0f172a; display: grid; gap: 35px; grid-template-columns: 1fr; margin: 0; padding: 40px 0; place-items: center; }
+        .slide-container { background-color: #f8fafc; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; height: 720px; overflow: hidden; padding: 50px 60px; position: relative; width: 1280px; font-family: "DM Sans", sans-serif; color: #1e293b; }
+        .slide-container::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 12px; background-color: #005088; }
+        h1 { font-family: "Merriweather", serif; font-size: 58px; color: #f8fafc; margin: 0; line-height: 1.2; font-weight: 700; }
+        .slide-title { font-family: "Merriweather", serif; font-size: 38px; color: #005088; margin-bottom: 20px; font-weight: 700; border-bottom: 2px solid #cbd5e1; padding-bottom: 8px; width: 100%; text-transform: uppercase; letter-spacing: 0.5px; }
+        h3 { font-family: "Merriweather", serif; font-size: 22px; color: #005088; margin: 0 0 12px 0; font-weight: 700; }
+        p, li, td { font-size: 16px; line-height: 1.6; color: #334155; }
+        strong { color: #0f172a; font-weight: 700; }
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: start; width: 100%; }
+        .two-column { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; width: 100%; align-items: start; }
+        .tiled-content { display: flex; gap: 20px; width: 100%; }
+        .tile { flex: 1; background: #ffffff; padding: 25px; border-radius: 4px; border-top: 4px solid #005088; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-left: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        th { background: #005088; color: white; padding: 14px; text-align: left; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 12px 14px; border-bottom: 1px solid #e2e8f0; font-size: 14px; color: #475569; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        .img-box { width: 100%; border: 1px solid #cbd5e1; background: #ffffff; padding: 8px; height: 420px; overflow: hidden; border-radius: 4px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05); }
+        .img-box img { width: 100%; height: 100%; object-fit: contain; }
+        .bullet-list ul { list-style: none; padding: 0; margin: 0; }
+        .bullet-list li { margin-bottom: 14px; padding-left: 30px; position: relative; font-size: 15.5px; }
+        .bullet-list i { position: absolute; left: 0; top: 3px; color: #005088; font-size: 18px; }
+        .highlight-box { background-color: #f0f7ff; border-left: 4px solid #005088; padding: 15px; margin-top: 15px; border-radius: 0 4px 4px 0; }
+    </style>
+</head>
+<body>
+
+<div class="slide-container" style="background-color: #005088; justify-content: center;">
+    <div style="border-left: 10px solid #f8fafc; padding-left: 40px;">
+        <h3 style="color: #cbd5e1; letter-spacing: 3px; margin-bottom: 10px; text-transform: uppercase;">Proyecto Final de Fundamentos de Ciencia de Datos</h3>
+        <h1>Análisis y Predicción de Ventas<br>en una Tienda de Retail</h1>
+        <p style="color: #f8fafc; font-size: 24px; margin-top: 20px; opacity: 0.9; font-weight: 400;">Modelamiento Exploratorio, Curaduría Estacional y Proyección Financiera</p>
+        <div style="margin-top: 60px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+            <p style="color: #cbd5e1; font-size: 16px;"><strong>Data Scientist:</strong> Iván Cortés Venegas. &nbsp;|&nbsp; <strong>Fase:</strong> Entrega Síntesis de Proyecto I &nbsp;|&nbsp; <strong>Versión:</strong> Tag v1.0.0</p>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">1. Introducción y Objetivos Estratégicos</h2>
+    <div class="content-area">
+        <div class="two-column" style="grid-template-columns: 1.2fr 0.8fr;">
+            <div class="bullet-list">
+                <h3>Definición del Problema y Metas</h3>
+                <p style="margin-bottom: 20px;">El ecosistema retail demanda una transición desde la gestión reactiva hacia la **planificación predictiva**. Este proyecto aborda el ciclo completo de análisis exploratorio para responder a la pregunta fundamental del negocio: **¿Cómo escalar la operación actual de forma segura y mitigar el riesgo logístico?**</p>
+                <ul>
+                    <li><i class="fa-solid fa-crosshairs"></i> <strong>Objetivo Central:</strong> Diseñar un marco analítico capaz de segmentar el comportamiento de los clientes y modelar las tendencias estacionales para soportar algoritmos de predicción.</li>
+                    <li><i class="fa-solid fa-chart-line"></i> <strong>Meta Financiera (Breakeven):</strong> Validar las palancas comerciales necesarias para alcanzar una **Proyección Doble de $912,000.00** sobre la base actual.</li>
+                    <li><i class="fa-solid fa-layer-group"></i> <strong>Eficiencia Logística:</strong> Identificar valles y picos operativos para mitigar costos de almacenamiento y quiebres de stock.</li>
+                </ul>
+            </div>
+            <div class="tile" style="background-color: #f0f7ff; align-self: center;">
+                <h3 style="text-align: center;"><i class="fa-solid fa-wallet"></i> Línea Base Financiera</h3>
+                <div style="text-align: center; margin: 20px 0;">
+                    <span style="font-size: 42px; font-weight: 700; color: #005088;">$456,000.00</span>
+                    <p style="font-size: 14px; color: #64748b; margin: 5px 0 0 0;">Suma Total de Ventas Históricas</p>
+                </div>
+                <hr style="border: 0; border-top: 1px solid #cbd5e1;">
+                <p style="font-size: 15px; margin-top: 15px;">• <strong>Ticket Promedio General:</strong> $456.00 por transacción.<br>• <strong>Mediana del Gasto:</strong> $135.00.<br>• <strong>Techo Transaccional:</strong> $2,000.00.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">2. Descripción del Dataset y Auditoría de Calidad</h2>
+    <div class="content-area">
+        <div class="table-layout" style="margin-bottom: 25px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Dimensión Analítica</th>
+                        <th>Tipo de Variable</th>
+                        <th>Estado de Integridad (Data Cleansing)</th>
+                        <th>Impacto en el Modelo Predictivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Temporal (Date)</strong></td>
+                        <td>Datetime64</td>
+                        <td>0% Nulos. Tipos corregidos para habilitar indexación cronológica.</td>
+                        <td>Permite agrupar por remuestreo mensual (*Resampling*).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Demográfica (Gender / Age)</strong></td>
+                        <td>Nominal / Entero</td>
+                        <td>Sin registros duplicados. Rango etario controlado (IQR: 29-53 años).</td>
+                        <td>Define la transversalidad o necesidad de micro-segmentación.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unidad de Negocio (Category)</strong></td>
+                        <td>Object / Categoría</td>
+                        <td>Consistencia de texto normalizada. 3 categorías únicas.</td>
+                        <td>Aísla el rendimiento operativo por línea de productos.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Financiera (Total Amount)</strong></td>
+                        <td>Float64</td>
+                        <td>Nulos imputados. Eliminación estricta de redundancias.</td>
+                        <td>Variable objetivo (*Target*) para proyecciones.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tiled-content">
+            <div class="tile">
+                <strong>Resultados de la Limpieza:</strong> La remoción de duplicados técnicos y la consistencia en el parseo de fechas garantizaron que la masa crítica de <strong>$456,000.00</strong> no contenga sesgos inflacionarios por registros dobles en pasarela de pagos.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">3. Distribución del Gasto Total y Sesgo Operativo</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="bullet-list">
+                <h3>Análisis de Densidad Monetaria</h3>
+                <p>El comportamiento de los montos totales de venta exhibe una estructura asimétrica fundamental para la toma de decisiones.</p>
+                <ul>
+                    <li><i class="fa-solid fa-chart-bar"></i> <strong>Disparidad Media vs. Mediana:</strong> La media aritmética se sitúa en <strong>$456.00</strong>, mientras que la mediana operativa se desplaza hacia abajo a los <strong>$135.00</strong>.</li>
+                    <li><i class="fa-solid fa-triangle-exclamation"></i> <strong>Sesgo de Distribución:</strong> Esta brecha confirma que existe un marcado sesgo positivo; el volumen mayoritario de transacciones es de bajo valor, pero el flujo de caja neto depende de un grupo selecto de tickets altos.</li>
+                    <li><i class="fa-solid fa-shield-halved"></i> <strong>Límite de Control Interno:</strong> Basado en la distribución, se fija un límite técnico de <strong>$2,135.99</strong>. Cualquier transacción que supere este umbral operativo debe ser automáticamente auditada para mitigar riesgos de fraude.</li>
+                </ul>
+            </div>
+            <div class="img-box">
+                <img src="output_1.png" alt="Gráfico output_1.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">4. Análisis de Relación Lineal: Edad vs. Gasto</h2>
+    <div class="content-area">
+        <div class="two-column" style="grid-template-columns: 0.9fr 1.1fr;">
+            <div class="img-box">
+                <img src="output_2.png" alt="Gráfico output_2.png">
+            </div>
+            <div class="bullet-list">
+                <h3>Evidencia de Independencia Demográfica</h3>
+                <p>Uno de los hallazgos más contundentes del proyecto surge al cruzar la edad biológica del cliente con el monto de su compra.</p>
+                <ul>
+                    <li><i class="fa-solid fa-calculator"></i> <strong>Coeficiente de Pearson ($r$):</strong> El cálculo estadístico arrojó un valor formal de <strong>-0.06</strong>, situándose en el umbral de relación lineal prácticamente nula.</li>
+                    <li><i class="fa-solid fa-universal-access"></i> <strong>Insight de Transversalidad:</strong> Comercial de alto valor: el ticket de compra es independiente del factor demográfico. Un consumidor joven de 20 años posee estadísticamente el mismo potencial de generar un ticket alto que un adulto de 60 años.</li>
+                    <li><i class="fa-solid fa-lightbulb"></i> <strong>Cambio de Estrategia:</strong> Se descartan los presupuestos asignados a separar campañas por rangos de edad rígidos. El marketing debe orientarse a incentivos transversales como la experiencia en cajas y la renovación del *mix de productos*.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">5. Validación mediante Matriz de Correlación</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="bullet-list">
+                <h3>Aislamiento Metodológico</h3>
+                <p>Para fundamentar el modelo de predicción, se evaluó la interdependencia de todas las variables numéricas mediante un mapa de calor.</p>
+                <ul>
+                    <li><i class="fa-solid fa-compress"></i> <strong>Rigor Técnico:</strong> La matriz ratifica que `Age` no covaría con ninguna variable financiera. Las variables nominales (`Gender`, `Product Category`) fueron justamente aisladas de este análisis al no cumplir con los supuestos matemáticos de Pearson.</li>
+                    <li><i class="fa-solid fa-arrow-up-right-dots"></i> <strong>Correlaciones Operativas:</strong> Se validan coeficientes altos esperados entre variables de volumen, lo que justifica enfocar los esfuerzos en la frecuencia transaccional.</li>
+                </ul>
+                <div class="highlight-box">
+                    <strong>Conclusión Teórica:</strong> El comportamiento predictivo del negocio no puede sustentarse en variables demográficas lineales aisladas; requiere un enfoque multidimensional basado en categorías y tiempo.
+                </div>
+            </div>
+            <div class="img-box">
+                <img src="output_5.1.png" alt="Gráfico output_5.1.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">6. Desempeño Operativo Diario por Unidad de Negocio</h2>
+    <div class="content-area">
+        <div class="table-layout" style="margin-bottom: 20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoría de Producto</th>
+                        <th>Total Ingresos Acumulados</th>
+                        <th>Promedio de Venta Diaria</th>
+                        <th>Masa Temporal (Días con Ventas)</th>
+                        <th>Liderazgo Operativo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Electronics</strong></td>
+                        <td>$156,905.00</td>
+                        <td>$716.46</td>
+                        <td>219 días</td>
+                        <td><span class="metric-badge" style="background:#10b981; color:white; padding:4px 8px; border-radius:12px;">Máximo en Ventas</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Clothing</strong></td>
+                        <td>$155,580.00</td>
+                        <td>$670.60</td>
+                        <td>232 días</td>
+                        <td><span class="metric-badge" style="background:#3b82f6; color:white; padding:4px 8px; border-radius:12px;">Máxima Frecuencia</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Beauty</strong></td>
+                        <td>$143,515.00</td>
+                        <td>$703.50</td>
+                        <td>204 días</td>
+                        <td><span class="metric-badge" style="background:#f59e0b; color:white; padding:4px 8px; border-radius:12px;">Menor Volumen</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="two-column" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="tile">
+                <strong>Análisis de Varianza en Belleza:</strong> El grupo *Male en Beauty* presenta la mayor desviación estándar del dataset. Significa que este nicho es errático y depende de compras impulsivas o de alto valor ocasional. **Táctica:** Diseñar *bundles* o precios dinámicos para estabilizar el ticket de este sector.
+            </div>
+            <div class="tile">
+                <strong>Dominancia de Ropa:</strong> *Clothing* genera el mayor volumen de frecuencia (232 días). El segmento *Female en Clothing* muestra el conteo de compras más alto. **Estrategia:** Es la categoría ancla para promociones cruzadas.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">7. Análisis de Estacionalidad Mensual y Flujo de Caja</h2>
+    <div class="content-area">
+        <div class="two-column" style="grid-template-columns: 0.8fr 1.2fr;">
+            <div class="img-box">
+                <img src="output_4.png" alt="Gráfico output_4.png">
+            </div>
+            <div class="bullet-list">
+                <h3>Comportamiento Cronológico del Flujo de Caja</h3>
+                <p>El remuestreo mensual (*Resampling*) permitió limpiar el ruido transaccional diario para revelar los ciclos de la demanda.</p>
+                <ul>
+                    <li><i class="fa-solid fa-arrow-trend-up"></i> <strong>Hito Histórico Récord (Pico):</strong> Identificado de manera contundente en **Mayo 2023** con una facturación mensual de **$53,150.00**, impulsado principalmente por la categoría *Electronics* (que alcanza su cenit en el mes 5).</li>
+                    <li><i class="fa-solid fa-arrow-trend-down"></i> <strong>Valle Crítico Operativo:</strong> El punto de inflexión más bajo del flujo de caja se registra en **Enero 2024**.</li>
+                    <li><i class="fa-solid fa-gears"></i> <strong>Sincronización Logística:</strong> Para alimentar un modelo de predicción eficiente, el reabastecimiento para el Q2 (Abril-Junio) debe programarse con **3 meses de antelación** para evitar quiebres en tecnología. En el valle de enero, se deben activar campañas de liquidación (*Ventas Flash*) para sostener la liquidez.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">8. Auditoría Financiera del Programa de Puntos</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div class="bullet-list">
+                <h3>Impacto del Modelo de Retención</h3>
+                <p>El programa de lealtad actúa como una palanca financiera directa sobre el valor del tiempo de vida del cliente (CLV).</p>
+                <ul>
+                    <li><i class="fa-solid fa-percentage"></i> <strong>Tasa de Adopción (45.8%):</strong> Cerca de la mitad de las transacciones alcanzan los umbrales de recompensa. Si este indicador fuera inferior, los niveles actuales serían inalcanzables, desincentivando la compra recurrente.</li>
+                    <li><i class="fa-solid fa-triangle-exclamation"></i> <strong>Análisis de Pasivo:</strong> Se han acumulado un total de **49,785.00 puntos**, lo que representa una deuda o compromiso financiero futuro para el negocio. La mediana actual de 0.0 puntos advierte que el cliente esporádico no está sumando beneficios.</li>
+                    <li><i class="fa-solid fa-scale-balanced"></i> <strong>Punto de Equilibrio (Breakeven):</strong> Para que el programa sea rentable, el aumento en la frecuencia transaccional debe amortizar el **10.92% cedido en puntos**, reduciendo orgánicamente el Costo de Adquisición de Clientes (CAC).</li>
+                </ul>
+            </div>
+            <div class="img-box">
+                <img src="output_3.png" alt="Gráfico output_5.png">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">9. Dashboard Unificado: Visión Holística del Negocio</h2>
+    <div class="content-area">
+        <div class="img-box" style="height: 440px;">
+            <img src="output_5.2.png" alt="Gráfico output_6.png">
+        </div>
+        <p style="margin-top: 15px; font-style: italic; font-size: 15px; text-align: center;">Este gráfico consolida la masa de ingresos por género y categoría mediante estimadores de suma. el ticket promedio de cada categoría se muestra en las leyendas</p>
+    </div>
+</div>
+
+<div class="slide-container" style="background-color: #f0f7ff; border-left: 12px solid #005088;">
+    <h2 class="slide-title" style="color: #005088; border: none; padding: 0;">10. Conclusions y Cumplimiento del Objetivo Predictivo</h2>
+    <div class="content-area" style="justify-content: center;">
+        <div class="tile" style="background: white; border-top-width: 6px; padding: 35px;">
+            <h3>¿Se cumplió el objetivo de Análisis y Predicción?</h3>
+            <p style="font-size: 18px; color: #0f172a; font-weight: 500;"><strong>SÍ.</strong> El proyecto cumplió exitosamente la fase exploratoria y de ingeniería de características (*Feature Engineering*) requerida para habilitar modelos de proyección financiera confiables.</p>
+            
+            <div class="highlight-box" style="background-color: #fff; border-left-color: #10b981; margin-top: 20px;">
+                <p style="font-size: 16px; color: #047857;"><strong>Viabilidad de la Proyección Doble de $912,000.00:</strong><br>
+                El objetivo de duplicar el ingreso es científicamente viable si el negocio implementa las reglas derivadas del EDA: capturar el nicho de alto gasto unitario (**Jóvenes en Beauty**), blindar el stock de la categoría principal (**Adultos en Clothing**) y anticipar la cadena de suministro en base al pico estacional de mayo.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container">
+    <h2 class="slide-title">11. Plan de Acción y Recomendaciones</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <h3 style="color: #b91c1c;"><i class="fa-solid fa-shield-virus"></i> Mitigación de Riesgos</h3>
+                <p><strong>Atención VIP a Outliers:</strong> Activar protocolos de fidelización inmediata para transacciones atípicas (desviación positiva de <strong>+$1,556.75</strong>), ya que representan el segmento corporativo de alto valor.</p>
+            </div>
+            <div class="tile">
+                <h3 style="color: #1d4ed8;"><i class="fa-solid fa-arrows-spin"></i> Optimización de Margen</h3>
+                <p><strong>Control de Descuentos:</strong> Auditar los productos con desviaciones negativas severas (hasta <strong>-$442.48</strong>) para identificar si sufren de rebajas agresivas innecesarias que sacrifican rentabilidad.</p>
+            </div>
+            <div class="tile">
+                <h3 style="color: #047857;"><i class="fa-solid fa-chart-pie"></i> Campañas Transversales</h3>
+                <p><strong>Upselling de Caja:</strong> Explotar el incentivo escalonado del programa de puntos para motivar a los clientes cuya compra promedio ronda los $456.00 a llevar productos adicionales y alcanzar los niveles VIP.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="slide-container" style="background-color: #005088; text-align: center; justify-content: center; align-items: center;">
+    <h1 style="font-size: 90px; margin-bottom: 10px;">¿Preguntas?</h1>
+    <p style="color: #f8fafc; font-size: 24px; opacity: 0.9; font-family: 'Merriweather', serif; font-style: italic;">Análisis y Predicción de Ventas Retail</p>
+    <div style="margin-top: 60px; width: 300px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 20px;">
+        <p style="color: #cbd5e1; font-size: 15px; font-family: monospace;">
+            <i class="fa-brands fa-github"></i> Icortesve<br>
+            tag: v1.0.0 (Stable)<br>
+            Iván Cortés V. — 2026
+        </p>
+    </div>
+</div>
+
+</body>
+</html>
