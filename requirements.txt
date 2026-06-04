@@ -1,3 +1,5 @@
 Pandas
 matplotlib
 seaborn
+matplotlib.patches
+Numpy
